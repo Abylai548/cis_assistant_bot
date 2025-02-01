@@ -6,3 +6,12 @@
     }
   }
 }
+{
+  "services": [
+    {
+      "name": "bot",
+      "startCommand": "python schoo_bot.py",
+      "env": {}
+    }
+  ]
+}
