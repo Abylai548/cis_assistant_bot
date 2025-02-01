@@ -1,12 +1,4 @@
 {
-  "services": {
-    "bot": {
-      "env": {},
-      "startCommand": "python schoo_bot.py"
-    }
-  }
-}
-{
   "services": [
     {
       "name": "bot",
