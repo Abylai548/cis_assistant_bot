@@ -114,3 +114,34 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
+
+# Токен твоего бота
+TELEGRAM_TOKEN = "your_telegram_token_here"
+
+# Функция, которая будет отвечать на команду /start
+def start(update: Update, context: CallbackContext):
+    update.message.reply_text("Привет, я бот!")
+
+# Главная функция, которая запускает бота
+def main():
+    # Создаем Updater, который будет обрабатывать сообщения
+    updater = Updater(TELEGRAM_TOKEN)
+
+    # Получаем диспетчер для добавления обработчиков
+    dp = updater.dispatcher
+
+    # Добавляем обработчик для команды /start
+    dp.add_handler(CommandHandler("start", start))
+
+    # Запускаем Polling, чтобы получать сообщения от Telegram
+    updater.start_polling()
+
+    # Работает до того момента, пока не будет прервано
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
+
