@@ -1,1 +1,15 @@
-"[tool.poetry]" 
+[tool.poetry]
+name = "cis_assistant_bot"
+version = "0.1.0"
+description = "AI bot for CIS Assistant"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+flask = "^2.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
