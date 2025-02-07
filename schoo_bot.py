@@ -1,9 +1,18 @@
 import os
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
+from flask import Flask
+from threading import Thread
 
 # Токен вашего бота (замените на свой)
 TELEGRAM_BOT_TOKEN = "7850776082:AAGJcHWoBUjOLee17JTDwWyyNoCeO7nzTiU"
+
+# Flask сервер
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello, CIS Assistant Bot!"
 
 # Функция обработки команды /start
 def start(update: Update, context: CallbackContext) -> None:
@@ -94,7 +103,7 @@ def documents(update: Update, context: CallbackContext) -> None:
     )
 
 # Функция запуска бота
-def main():
+def run_telegram_bot():
     updater = Updater(TELEGRAM_BOT_TOKEN, use_context=True)
     dp = updater.dispatcher
 
@@ -112,46 +121,14 @@ def main():
     updater.start_polling()
     updater.idle()
 
-if __name__ == "__main__":
-    main()
-
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
-
-# Токен твоего бота
-TELEGRAM_TOKEN = "your_telegram_token_here"
-
-# Функция, которая будет отвечать на команду /start
-def start(update: Update, context: CallbackContext):
-    update.message.reply_text("Привет, я бот!")
-
-# Главная функция, которая запускает бота
-def main():
-    # Создаем Updater, который будет обрабатывать сообщения
-    updater = Updater(TELEGRAM_TOKEN)
-
-    # Получаем диспетчер для добавления обработчиков
-    dp = updater.dispatcher
-
-    # Добавляем обработчик для команды /start
-    dp.add_handler(CommandHandler("start", start))
-
-    # Запускаем Polling, чтобы получать сообщения от Telegram
-    updater.start_polling()
-
-    # Работает до того момента, пока не будет прервано
-    updater.idle()
-
-if __name__ == '__main__':
-    main()
-
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "Бот работает!"
+# Запуск Flask и Telegram бота в отдельных потоках
+def run_flask():
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    # Запускаем Flask в одном потоке
+    flask_thread = Thread(target=run_flask)
+    flask_thread.start()
+
+    # Запускаем Telegram бота
+    run_telegram_bot()

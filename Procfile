@@ -1,1 +1,1 @@
-worker: python schoo_bot.py
+web: gunicorn schoo_bot:app 
