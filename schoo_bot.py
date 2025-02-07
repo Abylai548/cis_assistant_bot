@@ -132,3 +132,4 @@ if __name__ == "__main__":
 
     # Запускаем Telegram бота
     run_telegram_bot()
+
