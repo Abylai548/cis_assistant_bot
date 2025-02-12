@@ -102,7 +102,7 @@ def documents(update: Update, context: CallbackContext) -> None:
         "📌 Подробнее: https://www.cisastana.kz/admissions/documents"
     )
 
-# Функция запуска бота
+# Функция запуска Telegram-бота
 def run_telegram_bot():
     updater = Updater(TELEGRAM_BOT_TOKEN, use_context=True)
     dp = updater.dispatcher
@@ -121,15 +121,14 @@ def run_telegram_bot():
     updater.start_polling()
     updater.idle()
 
-# Запуск Flask и Telegram бота в отдельных потоках
+# Функция запуска Flask
 def run_flask():
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False)
 
 if __name__ == "__main__":
-    # Запускаем Flask в одном потоке
+    # Запускаем Flask в отдельном потоке
     flask_thread = Thread(target=run_flask)
     flask_thread.start()
 
-    # Запускаем Telegram бота
+    # Запускаем Telegram-бота в главном потоке
     run_telegram_bot()
-
